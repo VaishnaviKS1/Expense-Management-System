@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Rewards</title>
+</head>
+<body>
+    <div class="container">
+        <ul class="nav nav-tabs ">
+          <li class="active"><a data-toggle="tab" href="#rewards">Rewards</a></li>
+          <li><a data-toggle="tab" href="#claimed">Claimed Rewards</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="rewards" class="tab-pane fade in active">
+            <h1>My Rewards: </h1>
+            
+            <table class="table table-hover">
+              <% if(result.length > 0){ %>
+                  <thead>
+                      <tr class="info">
+                        <th scope="col">Description</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Expiry Date</th>
+                        <th scope="col">Your Name</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+              <% for(var i = 0 ;i<result.length;i++){ %>
+              <tbody>
+                <tr>
+                  <th><%- result[i].DESCR %> </th>
+                  <th><%- result[i].CODE %> </th>
+                  <th><%- result[i].EXPIRY_DATE %> </th>
+                  <th>
+                  <form method="get" action="/claim"  autocomplete="off">
+                      <input type="email" name="email" placeholder="Email" class="form-control" required>
+                      <input type="text" name="code" placeholder="Code" id="code" class="form-control">
+                      <button type="submit" class="btn btn-primary"> Submit </button></th>
+                  </form>
+                </tr>
+              </tbody>
+              <% } %>
+              <% }else{ %>
+              <h1>No Rewards Found</h1>
+              <% } %>
+            </table>
+          </div> 
+          <div id="claimed" class="tab-pane fade">
+            <h1>Claimed Rewards: </h1>
+            
+            <table class="table table-hover">
+              <% if(claim.length > 0){ %>
+                  <thead>
+                      <tr class="info">
+                        <th scope="col">Description</th>
+                        <th scope="col">Code</th>
+                        <th scope="col">Expiry Date</th>
+                        <th scope="col"></th>
+                      </tr>
+                    </thead>
+              <% for(var i = 0 ;i<claim.length;i++){ %>
+              <tbody>
+                <tr>
+                  <th><%- claim[i].DESCR %> </th>
+                  <th><%- claim[i].CODE %> </th>
+                  <th><%- claim[i].EXPIRY_DATE %> </th>
+                  </form>
+                </tr>
+              </tbody>
+              <% } %>
+              <% }else{ %>
+              <h4>No Rewards Found</h4>
+              <% } %>
+            </table>
+          </div> 
+        </div>
+        <div class="form-outline">
+          <button class="btn btn-primary"><a href="/userland?name=<%- user[0].USER_EMAIL %>&password=<%- user[0].USER_PASSWORD %>" style="color: white">Back To User Page</a></button><br/><br/>
+        </div> 
+    </div>
+</body>
+</html>

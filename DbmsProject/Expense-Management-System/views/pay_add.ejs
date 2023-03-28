@@ -1,0 +1,118 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add a Transaction</title>
+  <script>
+    function addPay(){
+      alert('Transaction Added!')
+    }
+  </script>
+</head>
+
+<body>
+  <div class="container align-items-center">
+  <br>
+  <br>
+    <h2><%- title %></h2>
+    <br>
+    <p id="demo"></p>
+    <form action="/save" method="post">
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="email">Email</label>
+            <input type="text" class="form-control" id="email" name="email" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label>Account Number </label>
+              <% for( let i = 0; i < result.length; i++ ) { %>
+                <% if (result[i].ACC_BAL <= 1000) { %>
+                  <div class="alert alert-danger" role="alert">
+                    Account Number <%- result[i].ACC_NO %> has low balance!
+                    Use another account or go back and replenish this one!
+                  </div>
+                <% } else {%>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="radio" name="accNo" id="accNo"
+                    value="<%- result[i].ACC_NO %>"/>
+                  <label class="form-check-label" for="accNo"><%- result[i].ACC_NO %></label>
+                </div>
+                <% } %>
+              <% } %>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+          <label for="date">Date</label>
+          <input type="text" class="form-control" id="add_date" placeholder="yyyy-mm-dd" name="pay_date" required>
+          </div>
+          <div class="form-group col-md-4">
+          <label for="amount">Amount</label>
+          <input type="number" class="form-control" id="pay_amt" name="pay_amt" min="1" max="3000" required>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-4">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" id="pay_desc" name="pay_desc" required>
+        </div>
+        <div class="form-group col-md-4">
+            <label for="recipient">Recipient Name</label>
+            <input type="text" class="form-control" id="rec_name" name="rec_name" required>
+        </div>
+        </div>
+        <br>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+
+              <label for="paymentMethod">Payment Method: </label>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="enterprise"
+                  value="enterprise" checked/>
+                <label class="form-check-label" for="Enterprise">Enterprise</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="phoneNumber"
+                  value="phoneNumber"/>
+                <label class="form-check-label" for="PhoneNumber">Phone Number</label>
+              </div>
+
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" name="paymentMethod" id="bankAccount"
+                  value="phoneNumber"/>
+                <label class="form-check-label" for="bankAccount">Bank Account</label>
+              </div>
+            </div>
+            <div class="col-md-4 mb-4 pb-2">
+      
+              <div class="form-outline">
+                <input type="tel" name="phoneNumber" id="phoneNumber" class="form-control form-control-lg" maxlength="10"/>
+                <label class="form-label" for="phoneNumber">Phone Number of Recipient</label>
+              </div>      
+              <div class="form-outline">
+                <input type="number" name="recAcc" id="RecipientAccount" class="form-control form-control-lg" maxlength="18"/>
+                <label class="form-label" for="recAccNo">Account Number of Recipient</label>
+              </div>
+
+            </div>
+        </div>
+        <br>
+        <br>
+        <div>
+          <button type="submit" class="btn btn-primary btn-lg" onclick="addPay()">Submit</button>
+        </div>
+    </form>
+
+</div>
+</body>
+
+</html>

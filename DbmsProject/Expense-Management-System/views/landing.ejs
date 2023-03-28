@@ -1,0 +1,65 @@
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Admin Page</title>
+</head>
+
+<div class="container">
+
+  <ul class="nav nav-tabs ">
+    <li class="active"><a data-toggle="tab" href="#admin">Admin</a></li>
+  </ul>
+  <div class="tab-content">
+    <div id="admin" class="tab-pane fade in active">
+      <h3>Users: </h3>
+      <h3><small class="text-muted">Click on the user name to see user transactions</small></h3>
+      <table class="table table-hover">
+        <% if(result.length > 1){ %>
+            <thead>
+                <tr class="info">
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Phone</th>
+                  <th scope="col"> </th>
+                </tr>
+              </thead>
+        <% for(var i = 1 ;i<result.length;i++){ %>
+        <tbody>
+          <tr>
+            <th><a href="/userland?name=<%- result[i].USER_EMAIL%>&password=<%- result[i].USER_PASSWORD%>" style="color:black"><%- result[i].FNAME %></a></th>
+            <th name="useremail"><%- result[i].USER_EMAIL %> </th>
+            <th><%- result[i].USER_PHONE %> </th>
+            <th> <a href="/delete-user?id=<%- result[i].USER_ID %>">Delete</a></th>
+          </tr>
+        </tbody>
+        <% } %>
+        <% }else{ %>
+        <h1>No User Data Found</h1>
+        <% } %>
+      </table>
+    </div>
+    <div class="row">
+      <div class="form-outline col-md-4">
+        <button class="btn btn-primary"><a href="/" style="color: white">Back To Admin Login</a></button><br/><br/>
+      </div>
+      <div class="form-outline col-md-4">
+        <button class="btn btn-primary"><a href="/signup?admin=<%- result[0].ADMIN_EMAIL%>" style="color: white">Add A New User</a></button><br/><br/>
+      </div>
+      <div class="form-outline col-md-4">
+        <button class="btn btn-primary"><a href="/addAdmin" style="color: white">Add A New Admin</a></button><br/><br/>
+      </div>
+    </div>
+  </div>
+</div>
+
+<body>
+
+</body>
+
+</html>

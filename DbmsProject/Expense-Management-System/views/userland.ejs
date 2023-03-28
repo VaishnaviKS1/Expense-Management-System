@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <title>Userpage</title>
+</head>
+<body>
+    <h1 style="margin-left: 15px;">Hello <%- result[0].FNAME %></h1>
+    <div class="container">
+        <ul class="nav nav-tabs ">
+          <li class="active"><a data-toggle="tab" href="#transactions">User Payments</a></li>
+        </ul>
+        <div class="tab-content">
+          <div id="transactions" class="tab-pane fade in active">
+            <h3>My Payments: </h3>
+            <br>
+            <div class="row">
+              <div class="col-md-4 mb-4 pb-2">
+                
+                <div class="form-outline">
+                  <button class="btn btn-primary"><a href="/add?uid=<%- result[0].USER_ID %>" style="color: white">Add Transaction</a></button><br/><br/>
+                </div>
+
+              </div>
+              <div class="col-md-4 mb-4 pb-2">
+                
+                <div class="form-outline">
+                  <button class="btn btn-primary"><a href="/addmoney?uid=<%- result[0].USER_ID %>" style="color: white">Add Money</a></button><br/><br/>
+                </div>
+
+              </div>
+              <div class="col-md-4 mb-4 pb-2">
+                <button class="btn btn-primary"><a href="/rewards?email=<%- result[0].USER_EMAIL  %> " style="color: white">See Rewards</a></button><br/><br/>
+              </div>
+            </div>
+            
+            <table class="table table-hover">
+              <% if(pay.length > 0){ %>
+                  <thead>
+                      <tr class="info">
+                        <th scope="col">Date</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Description</th>
+                        <th scope="col">Recipient/Sender</th>
+                      </tr>
+                    </thead>
+              <% for(var i = 0 ;i<pay.length;i++){ %>
+              <tbody>
+                <tr>
+                  <th><%- pay[i].PAY_DATE %> </th>
+                  <th name="useremail"><%- pay[i].PAY_AMT %> </th>
+                  <th><%- pay[i].PAY_DESC %> </th>
+                  <th><%- pay[i].REC_NAME %></th>
+                </tr>
+              </tbody>
+              <% } %>
+              <% }else{ %>
+              <h3>No Transaction Data Found</h3>
+              <% } %>
+            </table>
+            <h4>Current Balance: </h4>
+            <% for( let i = 0; i < balance.length; i++ ) { %>
+                <% if (balance[i].ACC_BAL <= 1000) { %>
+                  <div class="alert alert-danger" role="alert">
+                    Account <%= (i+1) %>: Balance is Low! Add Money to Continue Transactions! 
+                  </div>
+                <% } else { %>
+                  <h4>Account <%= (i+1) %> : ₹<%- balance[i].ACC_BAL %></h4>
+                <% } %>
+            <% } %>
+          </div>  
+          <br>
+          <br>
+          <div class="form-outline">
+            <button class="btn btn-primary"><a href="/userLogin" style="color: white">Back To User Login</a></button><br/><br/>
+          </div>
+      
+        </div>
+    </div>
+</body>
+</html>
